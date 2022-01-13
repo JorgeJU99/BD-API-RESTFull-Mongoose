@@ -50,15 +50,15 @@ function createAutores(req, res) {
     ciudad: ciudad,
   });
   if (nombre && apellido && edad && ciudad) {
-    autor.save((error, autorStored) => {
+    autor.save((error, autorCreate) => {
       if (error) {
         res.status(500).send({
           message: error.message,
         });
       } else {
-        if (autorStored) {
+        if (autorCreate) {
           res.status(200).send({
-            autor: autorStored,
+            autor: autorCreate,
           });
         } else {
           res.status(200).send({
@@ -73,6 +73,7 @@ function createAutores(req, res) {
     });
   }
 }
+
 function updateAutores(req, res) {
   const id = req.params.id;
   const data = req.body;

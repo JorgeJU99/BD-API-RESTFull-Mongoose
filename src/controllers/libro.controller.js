@@ -51,15 +51,15 @@ function createLibros(req, res) {
     hojas: hojas,
   });
   if (titulo) {
-    libro.save((error, libroStored) => {
+    libro.save((error, libroCreate) => {
       if (error) {
         res.status(500).send({
           message: error.message,
         });
       } else {
-        if (libroStored) {
+        if (libroCreate) {
           res.status(200).send({
-            libro: libroStored,
+            libro: libroCreate,
           });
         } else {
           res.status(200).send({
