@@ -1,9 +1,18 @@
 const { Router } = require("express");
 const router = Router();
 
-const { getLibros, postLibro } = require("../controllers/libro.controller");
+const {
+  getLibros,
+  getLibrosById,
+  createLibros,
+  updateLibros,
+  deleteLibros,
+} = require("../controllers/libro.controller");
 
 router.get("/libros", getLibros);
-router.post("/libros", postLibro);
+router.get("/libros/:id", getLibrosById);
+router.post("/libros", createLibros);
+router.put("/libros/:id", updateLibros);
+router.delete("/libros/:id", deleteLibros);
 
 module.exports = router;

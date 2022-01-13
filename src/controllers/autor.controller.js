@@ -20,7 +20,28 @@ function getAutores(req, res) {
   });
 }
 
-function postAutores(req, res) {
+function getAutoresById(req, res) {
+  const id = req.params.id;
+  Autor.findById(id).exec((error, autorList) => {
+    if (error) {
+      res.status(500).send({
+        message: error,
+      });
+    } else {
+      if (autorList) {
+        res.status(200).json({
+          autores: autorList,
+        });
+      } else {
+        res.status(200).send({
+          message: "No se pudo listar los autores",
+        });
+      }
+    }
+  });
+}
+
+function createAutores(req, res) {
   const { nombre, apellido, edad, ciudad } = req.body;
   const autor = new Autor({
     nombre: nombre,
@@ -52,8 +73,53 @@ function postAutores(req, res) {
     });
   }
 }
+function updateAutores(req, res) {
+  const id = req.params.id;
+  const data = req.body;
+  Autor.findByIdAndUpdate(id, data, { new: true }, (error, autoresUpdate) => {
+    if (error) {
+      res.status(500).send({
+        message: error,
+      });
+    } else {
+      if (autoresUpdate) {
+        res.status(200).json({
+          autores: autoresUpdate,
+        });
+      } else {
+        res.status(200).send({
+          message: "No se pudo actualizar el autor",
+        });
+      }
+    }
+  });
+}
+
+function deleteAutores(req, res) {
+  const id = req.params.id;
+  Autor.findByIdAndRemove(id, (error, autorDelete) => {
+    if (error) {
+      res.status(500).send({
+        message: error,
+      });
+    } else {
+      if (autorDelete) {
+        res.status(200).json({
+          autores: autorDelete,
+        });
+      } else {
+        res.status(200).send({
+          message: "No se pudo eliminar el autor",
+        });
+      }
+    }
+  });
+}
 
 module.exports = {
   getAutores,
-  postAutores,
+  getAutoresById,
+  createAutores,
+  updateAutores,
+  deleteAutores,
 };
